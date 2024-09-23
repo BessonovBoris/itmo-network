@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-INTERFACE=$(ip route | grep default | awk '{print $5}')
+INTERFACE=$(ip l | grep 2: | awk '{print $2}' | sed 's/.$//')
 
 
 IP_ADDRESS="10.100.0.2"

@@ -1,9 +1,6 @@
 #!/bin/bash
 
-
-
-
-INTERFACE=$(ip route | grep default | awk '{print $5}')
+INTERFACE=$(ip l | grep 2: | awk '{print $2}' | sed 's/.$//')
 
 echo "Network card model: " $(lspci | grep -i ethernet)
 echo "Canal speed: " $(cat /sys/class/net/"$INTERFACE"/speed)
