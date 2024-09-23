@@ -44,3 +44,5 @@ echo "IP ADDRESS: $IP_ADDRESS"
 echo "NETMASK: $NETMASK"
 echo "GATEWAY: $GATEWAY"
 echo "DNS SERVERS: $DNS_SERVERS"
+
+echo "Canal speed: " $(cat /sys/class/net/"$INTERFACE"/speed)
