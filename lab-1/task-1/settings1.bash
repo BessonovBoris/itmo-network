@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-INTERFACE="enp0s5"
+INTERFACE=$(ip route | grep default | awk '{print $5}')
 
 
 IP_ADDRESS="10.100.0.2"
@@ -22,7 +22,6 @@ sudo ip route add default via $GATEWAY dev $INTERFACE
 echo "nameserver $DNS_SERVER" | sudo tee /etc/resolv.conf > /dev/null
 
 
-sudo ip link set $INTERFACE down
-sudo ip link set $INTERFACE up
+
 
 echo "NET INTERFACE $INTERFACE STATIC."
