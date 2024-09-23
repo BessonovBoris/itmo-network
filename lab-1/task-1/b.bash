@@ -7,7 +7,7 @@ INTERFACE=$(ip route | grep default | awk '{print $5}')
 
 echo "Network card model: " $(lspci | grep -i ethernet)
 echo "Canal speed: " $(cat /sys/class/net/"$INTERFACE"/speed)
-
+echo "Duplex mode: $(ethtool $INTERFACE | grep -i duplex | awk '{print $2}')"
 IP_INFO=$(ip -o -f inet addr show $INTERFACE | awk '{print $4}')
 IP_ADDRESS=${IP_INFO%/*}
 PREFIX=${IP_INFO#*/}
