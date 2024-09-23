@@ -5,6 +5,8 @@ echo "Config IPv4:"
 
 INTERFACE=$(ip route | grep default | awk '{print $5}')
 
+echo "Network card model: " $(lspci | grep -i ethernet)
+echo "Canal speed: " $(cat /sys/class/net/"$INTERFACE"/speed)
 
 IP_INFO=$(ip -o -f inet addr show $INTERFACE | awk '{print $4}')
 IP_ADDRESS=${IP_INFO%/*}
@@ -45,4 +47,3 @@ echo "NETMASK: $NETMASK"
 echo "GATEWAY: $GATEWAY"
 echo "DNS SERVERS: $DNS_SERVERS"
 
-echo "Canal speed: " $(cat /sys/class/net/"$INTERFACE"/speed)
