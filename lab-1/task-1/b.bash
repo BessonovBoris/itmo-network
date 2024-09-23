@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Config IPv4:"
+
 
 
 INTERFACE=$(ip route | grep default | awk '{print $5}')
@@ -8,6 +8,11 @@ INTERFACE=$(ip route | grep default | awk '{print $5}')
 echo "Network card model: " $(lspci | grep -i ethernet)
 echo "Canal speed: " $(cat /sys/class/net/"$INTERFACE"/speed)
 echo "Duplex mode: $(ethtool $INTERFACE | grep -i duplex | awk '{print $2}')"
+if [[ $(cat /sys/class/net/$INTERFACE/carrier) -eq 1 ]]; then
+    echo "Physical connection: Connected"
+else
+    echo "Physical connection: Disconnected"
+fi
 IP_INFO=$(ip -o -f inet addr show $INTERFACE | awk '{print $4}')
 IP_ADDRESS=${IP_INFO%/*}
 PREFIX=${IP_INFO#*/}
@@ -41,6 +46,7 @@ GATEWAY=$(ip route | grep default | awk '{print $3}')
 
 DNS_SERVERS=$(grep -E '^nameserver' /etc/resolv.conf | awk '{print $2}')
 
+echo "Config IPv4:"
 echo "INTERFACE: $INTERFACE"
 echo "IP ADDRESS: $IP_ADDRESS"
 echo "NETMASK: $NETMASK"
