@@ -53,3 +53,5 @@ echo "NETMASK: $NETMASK"
 echo "GATEWAY: $GATEWAY"
 echo "DNS SERVERS: $DNS_SERVERS"
 
+MAC=$(ip l | grep 'link/ether' | awk '{print $2}')
+echo "MAC adress: " $MAC
