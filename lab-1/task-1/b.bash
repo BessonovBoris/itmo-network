@@ -13,6 +13,8 @@ if [[ $(cat /sys/class/net/$INTERFACE/carrier) -eq 1 ]]; then
 else
     echo "Physical connection: Disconnected"
 fi
+MAC=$(ip l | grep 'link/ether' | awk '{print $2}')
+echo "MAC adress: " $MAC
 IP_INFO=$(ip -o -f inet addr show $INTERFACE | awk '{print $4}')
 IP_ADDRESS=${IP_INFO%/*}
 PREFIX=${IP_INFO#*/}
@@ -52,6 +54,3 @@ echo "IP ADDRESS: $IP_ADDRESS"
 echo "NETMASK: $NETMASK"
 echo "GATEWAY: $GATEWAY"
 echo "DNS SERVERS: $DNS_SERVERS"
-
-MAC=$(ip l | grep 'link/ether' | awk '{print $2}')
-echo "MAC adress: " $MAC
