@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt update
-sudo apt install -y netplan.io
 
 INTERFACE=$(ip route | grep default | awk '{print $5}')
 
@@ -19,24 +17,30 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-    INTERFACE:
+    enp0s5:
       dhcp4: no
       addresses:
         - 10.100.0.4/24
         - 10.100.0.5/24
-      gateway4: 10.100.0.3
+      routes:
+        - to: 0.0.0.0/0
+          via: 10.100.0.3
+      nameservers:
+        addresses:
+          - 8.8.8.8
 EOL
 
 sudo netplan apply
-echo "Конфигурация сети применена"
 
-echo "Проверка связи с 10.100.0.2 и 10.100.0.3:"
+sudo ip link set enp0s5 down
+sudo ip link set enp0s5 up
+
+
 ping -c 3 10.100.0.2
 ping -c 3 10.100.0.3
-
-echo "Проверка связи с 10.100.0.4 и 10.100.0.5:"
 ping -c 3 10.100.0.4
 ping -c 3 10.100.0.5
 
+
 echo "Таблица ARP кэша:"
-arp -n | grep -E "10.100.0.[2-5]"
+sudo arp -a
