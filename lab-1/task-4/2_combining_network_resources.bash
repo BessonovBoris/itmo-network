@@ -7,16 +7,16 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-    enp0s3:
+    enp0s5:
       dhcp4: no
-    enp0s8:
+    enp0s6:
       dhcp4: no
   bonds:
     bond007:
       dhcp4: true
       interfaces:
-        - enp0s3
-        - enp0s8
+        - enp0s5
+        - enp0s6
       parameters:
         mode: balance-rr
 EOL
