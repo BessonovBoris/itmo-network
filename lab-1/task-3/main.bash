@@ -37,10 +37,15 @@ sudo ip link set enp0s5 up
 
 
 ping -c 3 10.100.0.2
+sleep 5 &
 ping -c 3 10.100.0.3
+sleep 5 &
 ping -c 3 10.100.0.4
+sleep 5 &
 ping -c 3 10.100.0.5
 
 
 echo "Таблица ARP кэша:"
 sudo arp -a
+
+ip neigh show
